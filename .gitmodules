@@ -1,0 +1,12 @@
+[submodule "Web-Application"]
+	path = Web-Application
+	url = git@github.com:Fanfare-ETC/Web-Application.git
+[submodule "playbook_server"]
+	path = playbook_server
+	url = git@github.com:Fanfare-ETC/playbook_server.git
+[submodule "playbook-notifier"]
+	path = playbook-notifier
+	url = git@github.com:Fanfare-ETC/playbook-notifier.git
+[submodule "treasurehunt_server"]
+	path = treasurehunt_server
+	url = git@github.com:Fanfare-ETC/treasurehunt_server.git

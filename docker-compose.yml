@@ -1,0 +1,49 @@
+version: '3'
+services:
+  web-application:
+    image: nginx:alpine
+    volumes:
+      - ./Web-Application:/usr/share/nginx/html
+    working_dir: /usr/share/nginx/html
+    ports:
+      - '8080:80'
+  playbook-server:
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile.playbook-server
+    volumes:
+      - ./playbook_server:/app
+    working_dir: /app
+    command:
+      - php
+      - -S
+      - 0.0.0.0:8080
+    ports:
+      - '9002:8080'
+  playbook-notifier:
+    image: node:alpine
+    volumes:
+      - ./dockerfiles/node-wrapper.sh:/node-wrapper.sh
+      - ./playbook-notifier:/app
+    working_dir: /app
+    command:
+      - /node-wrapper.sh
+    ports:
+      - '9001:8080'
+  treasurehunt-server:
+    image: node:alpine
+    volumes:
+      - ./dockerfiles/node-wrapper.sh:/node-wrapper.sh
+      - ./treasurehunt_server:/app
+    working_dir: /app
+    command:
+      - /node-wrapper.sh
+    ports:
+      - '9000:8080'
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_DATABASE: playbook
+    ports:
+      - '3306:3306'
