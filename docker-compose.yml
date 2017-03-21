@@ -14,6 +14,8 @@ services:
       DB_NAME: "${PLAYBOOK_SERVER_DB_NAME}"
       PLAYBOOK_NOTIFIER_HOST: "${PLAYBOOK_NOTIFIER_HOST}"
       PLAYBOOK_NOTIFIER_PORT: "${PLAYBOOK_NOTIFIER_PORT}"
+      TREASUREHUNT_HOST: "${TREASUREHUNT_HOST}"
+      TREASUREHUNT_PORT: "${TREASUREHUNT_PORT}"
     ports:
       - '8080:80'
   playbook-server:
@@ -21,19 +23,17 @@ services:
       context: ./dockerfiles
       dockerfile: Dockerfile.playbook-server
     volumes:
+      - ./dockerfiles/php-wrapper.sh:/php-wrapper.sh
       - ./playbook_server:/app
     working_dir: /app
     command:
-      - php
-      - -S
-      - 0.0.0.0:8080
+      - /php-wrapper.sh
     environment:
-      DB_HOST: "${PLAYBOOK_SERVER_DB_HOST}"
+      DB_DSN: "mysql:host=${PLAYBOOK_SERVER_DB_HOST};dbname=${PLAYBOOK_SERVER_DB_NAME};charset=utf8"
       DB_USERNAME: "${PLAYBOOK_SERVER_DB_USERNAME}"
       DB_PASSWORD: "${PLAYBOOK_SERVER_DB_PASSWORD}"
-      DB_NAME: "${PLAYBOOK_SERVER_DB_NAME}"
     ports:
-      - '9002:8080'
+      - '9002:9000'
   playbook-notifier:
     image: node:alpine
     volumes:
