@@ -12,6 +12,8 @@ services:
       DB_USERNAME: "${PLAYBOOK_SERVER_DB_USERNAME}"
       DB_PASSWORD: "${PLAYBOOK_SERVER_DB_PASSWORD}"
       DB_NAME: "${PLAYBOOK_SERVER_DB_NAME}"
+      PLAYBOOK_NOTIFIER_HOST: "${PLAYBOOK_NOTIFIER_HOST}"
+      PLAYBOOK_NOTIFIER_PORT: "${PLAYBOOK_NOTIFIER_PORT}"
     ports:
       - '8080:80'
   playbook-server:
@@ -41,7 +43,7 @@ services:
     command:
       - /node-wrapper.sh
     ports:
-      - '9001:8080'
+      - "${PLAYBOOK_NOTIFIER_PORT}:8080"
   treasurehunt-server:
     image: node:alpine
     volumes:
