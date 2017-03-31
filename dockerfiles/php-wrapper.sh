@@ -10,7 +10,7 @@ _term() {
 }
 
 trap _term TERM
-php /composer.phar start &
+php -S 0.0.0.0:9000 -t public public/index.php
 
 child=$!
 while true; do
