@@ -14,8 +14,10 @@ services:
       DB_NAME: "${PLAYBOOK_SERVER_DB_NAME}"
       PLAYBOOK_NOTIFIER_HOST: "${PLAYBOOK_NOTIFIER_HOST}"
       PLAYBOOK_NOTIFIER_PORT: "${PLAYBOOK_NOTIFIER_PORT}"
-      TREASUREHUNT_HOST: "${TREASUREHUNT_HOST}"
-      TREASUREHUNT_PORT: "${TREASUREHUNT_PORT}"
+      TREASUREHUNT_1_HOST: "${TREASUREHUNT_1_HOST}"
+      TREASUREHUNT_1_PORT: "${TREASUREHUNT_1_PORT}"
+      TREASUREHUNT_2_HOST: "${TREASUREHUNT_2_HOST}"
+      TREASUREHUNT_2_PORT: "${TREASUREHUNT_2_PORT}"
       LEADERBOARD_HOST: "${LEADERBOARD_HOST}"
       LEADERBOARD_PORT: "${LEADERBOARD_PORT}"
     ports:
@@ -48,7 +50,7 @@ services:
       GCM_KEY: "${PLAYBOOK_NOTIFIER_GCM_KEY}"
     ports:
       - "${PLAYBOOK_NOTIFIER_PORT}:8080"
-  treasurehunt-server:
+  treasurehunt-server-1:
     image: node:alpine
     volumes:
       - ./dockerfiles/node-wrapper.sh:/node-wrapper.sh
@@ -57,7 +59,7 @@ services:
     command:
       - /node-wrapper.sh
     ports:
-      - '9000:8080'
+      - '${TREASUREHUNT_1_PORT}:8080'
   treasurehunt-server-2:
     image: node:alpine
     volumes:
@@ -67,7 +69,7 @@ services:
     command:
       - /node-wrapper.sh
     ports:
-      - '9003:8080'
+      - '${TREASUREHUNT_2_PORT}:8080'
   mysql:
     image: mysql:latest
     environment:
