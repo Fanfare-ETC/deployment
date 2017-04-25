@@ -58,6 +58,16 @@ services:
       - /node-wrapper.sh
     ports:
       - '9000:8080'
+  treasurehunt-server-2:
+    image: node:alpine
+    volumes:
+      - ./dockerfiles/node-wrapper.sh:/node-wrapper.sh
+      - ./treasurehunt_server:/app
+    working_dir: /app
+    command:
+      - /node-wrapper.sh
+    ports:
+      - '9003:8080'
   mysql:
     image: mysql:latest
     environment:
