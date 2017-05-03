@@ -21,7 +21,7 @@ services:
       LEADERBOARD_HOST: "${LEADERBOARD_HOST}"
       LEADERBOARD_PORT: "${LEADERBOARD_PORT}"
     ports:
-      - '8080:80'
+      - '${OPERATOR_PORT}:80'
   playbook-server:
     build:
       context: ./dockerfiles
@@ -37,7 +37,7 @@ services:
       DB_USERNAME: "${PLAYBOOK_SERVER_DB_USERNAME}"
       DB_PASSWORD: "${PLAYBOOK_SERVER_DB_PASSWORD}"
     ports:
-      - '9002:9000'
+      - '${PLAYBOOK_SERVER_PORT}:9000'
   playbook-notifier:
     image: node:alpine
     volumes:
@@ -83,4 +83,4 @@ services:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
     ports:
-      - '8081:80'
+      - '${PHPMYADMIN_PORT}:80'
